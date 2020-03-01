@@ -54,6 +54,8 @@ resource "google_compute_instance" "controller" {
   network_interface {
     subnetwork = google_compute_subnetwork.kthw_subnet.name
     network_ip = "10.240.0.1${count.index}"
+    // To get an external IP
+    access_config {}
   }
 
   boot_disk {
@@ -82,6 +84,9 @@ resource "google_compute_instance" "worker" {
   network_interface {
     subnetwork = google_compute_subnetwork.kthw_subnet.name
     network_ip = "10.240.0.2${count.index}"
+
+     // To get an external IP
+    access_config {}
   }
 
   service_account {
