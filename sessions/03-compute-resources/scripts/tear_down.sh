@@ -22,6 +22,12 @@ fi
 CURRENT_PATH=$(pwd)
 TERRAFORM_GCP_MODULE="${CURRENT_PATH}/gcp"
 
+pushd "${CURRENT_PATH}/terraform/gcp"
+    terraform destroy \
+      -var gcp_zone="${KTH_GCP_REGION}-b" \
+      --auto-approve
+popd
+
 pushd "${CURRENT_PATH}/terraform/template"
   terraform destroy \
     -var gcp_credentials="${KTH_GOOGLE_APPLICATION_CREDENTIALS}" \
@@ -29,10 +35,4 @@ pushd "${CURRENT_PATH}/terraform/template"
     -var gcp_region="${KTH_GCP_REGION}" \
     -var terraform_gcp_module="${TERRAFORM_GCP_MODULE}" \
     --auto-approve
-popd
-
-pushd "${CURRENT_PATH}/terraform/gcp"
-    terraform destroy \
-      -var gcp_zone="${KTH_GCP_REGION}-b" \
-      --auto-approve
 popd
